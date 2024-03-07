@@ -1,0 +1,62 @@
+{
+  "name": "copy-folder-contents",
+  "displayName": "Copy Folder Contents",
+  "description": "复制文件夹里各文件的内容到粘贴板",
+  "publisher": "CHENJIAMIAN",
+  "icon": "images/my-extension-icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CHENJIAMIAN/copy-folder-contents"
+  },
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.87.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.copyFolderContents1",
+        "title": "复制文件夹中所有内容(选择文件夹)"
+      },
+      {
+        "command": "extension.copyFolderContents2",
+        "title": "复制文件夹中所有内容(右键)",
+        "enablement": "explorerResourceIsFolder"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "extension.copyFolderContents2",
+          "group": "copy-folder-contents",
+          "title": "复制文件夹中所有内容(右键)"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.87.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-cli": "^0.0.6",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
