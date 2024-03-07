@@ -1,0 +1,8 @@
+{
+    "placeholder": "(Optional) Enter file extensions to copy (e.g: .js,.css,.ts).  (default: .vue, .js, .jsx, .ts)",
+    "errorMessage": "Please select a folder to copy its contents.",
+    "copiedMessage": "Folder contents copied to clipboard: ",
+    "failedMessage": "Failed to copy folder contents: ",
+    "copySuccess": "Folder contents copied to clipboard: ",
+    "copyError": "Failed to copy folder contents: "
+}

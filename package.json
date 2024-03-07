@@ -8,7 +8,8 @@
     "type": "git",
     "url": "https://github.com/CHENJIAMIAN/copy-folder-contents"
   },
-  "version": "0.0.1",
+  "l10n": "./l10n",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.87.0"
   },
@@ -21,11 +22,11 @@
     "commands": [
       {
         "command": "extension.copyFolderContents1",
-        "title": "复制文件夹中所有内容(选择文件夹)"
+        "title": "%extension.copyFolderContents1.title%"
       },
       {
         "command": "extension.copyFolderContents2",
-        "title": "复制文件夹中所有内容(右键)",
+        "title": "%extension.copyFolderContents2.title%",
         "enablement": "explorerResourceIsFolder"
       }
     ],
@@ -35,7 +36,7 @@
           "when": "explorerResourceIsFolder",
           "command": "extension.copyFolderContents2",
           "group": "copy-folder-contents",
-          "title": "复制文件夹中所有内容(右键)"
+          "title": "%extension.copyFolderContents2.title%"
         }
       ]
     }
@@ -49,14 +50,18 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.87.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
+    "@types/vscode": "^1.87.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
-    "eslint": "^8.56.0",
-    "typescript": "^5.3.3",
+    "@vscode/l10n-dev": "^0.0.34",
     "@vscode/test-cli": "^0.0.6",
-    "@vscode/test-electron": "^2.3.9"
+    "@vscode/test-electron": "^2.3.9",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@vscode/l10n": "^0.0.18"
   }
 }
