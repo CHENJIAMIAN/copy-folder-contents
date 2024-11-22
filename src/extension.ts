@@ -3,7 +3,7 @@ import * as path from "path";
 import * as fs from "fs";
 
 export function activate(context: vscode.ExtensionContext) {
-  const defaultExtensions = ".vue, .js, .jsx, .ts";
+  const defaultExtensions = ".vue, .js, .jsx, .ts, .tsx";
 
   let copyFolderContents1Command = vscode.commands.registerCommand(
     "extension.copyFolderContents1",
@@ -39,16 +39,16 @@ export function activate(context: vscode.ExtensionContext) {
                   extensions!
                 );
                 console.log("filteredFiles", filteredFiles);
-                const filteredFiles2 = filterFilesByExcludedItems(
-                  filteredFiles,
-                  ".test."
-                );
-                console.log("filteredFiles2", filteredFiles2);
+                // const filteredFiles2 = filterFilesByExcludedItems(
+                //   filteredFiles,
+                //   ".test."
+                // );
+                // console.log("filteredFiles2", filteredFiles2);
                 const copiedContent = generateCopiedContent(
                   folderPath,
-                  filteredFiles2
+                  filteredFiles
                 );
-                console.log("copiedContent", copiedContent);
+                // console.log("copiedContent", copiedContent);
                 vscode.env.clipboard.writeText(copiedContent).then(
                   () => {
                     vscode.window.showInformationMessage(
@@ -96,12 +96,12 @@ export function activate(context: vscode.ExtensionContext) {
 
         const filteredFiles = filterFilesByExtensions(files, extensions!);
         console.log("filteredFiles", filteredFiles);
-        const filteredFiles2 = filterFilesByExcludedItems(
-          filteredFiles,
-          ".test."
-        );
-        console.log("filteredFiles2", filteredFiles2);
-        const copiedContent = generateCopiedContent(folderPath, filteredFiles2);
+        // const filteredFiles2 = filterFilesByExcludedItems(
+        //   filteredFiles,
+        //   ".test."
+        // );
+        // console.log("filteredFiles2", filteredFiles2);
+        const copiedContent = generateCopiedContent(folderPath, filteredFiles);
         console.log("copiedContent", copiedContent);
 
         vscode.env.clipboard.writeText(copiedContent).then(
@@ -140,15 +140,22 @@ function getFilesInFolder(folderPath: string): string[] {
   return files;
 }
 
-function filterFilesByExtensions(
-  files: string[],
-  extensions: string
-): string[] {
-  const extensionList = extensions.split(",").map((ext) => ext.trim());
-  return files.filter((file) => {
-    const fileExt = path.extname(file).toLowerCase();
-    return extensionList.includes(fileExt);
-  });
+function filterFilesByExtensions(files: string[], extensions: string): string[] {
+    // 将传入的扩展名字符串分割为数组，并处理为正则表达式
+    const extensionList = extensions.split(",").map((ext) => {
+        const trimmedExt = ext.trim();
+        // 处理以'*'开头的扩展名
+        if (trimmedExt.startsWith("*.")) {
+            return new RegExp(`.*\\${trimmedExt.slice(1)}$`, 'i'); // 生成正则表达式，忽略大小写
+        } else {
+            return new RegExp(`^[^\\.]*\\${trimmedExt}$`, 'i');
+        }
+    });
+
+    return files.filter((file) => {
+        const fileName = path.basename(file);
+        return extensionList.some((regex) => regex.test(fileName)); // 检查文件名是否与任意正则表达式匹配
+    });
 }
 
 function filterFilesByExcludedItems(
@@ -167,7 +174,7 @@ function generateCopiedContent(folderPath: string, files: string[]): string {
   files.forEach((file) => {
     const relativePath = path.relative(folderPath, file);
     const fileContent = fs.readFileSync(file, "utf8");
-    copiedContent += `${relativePath}:\n\`\`\`\n${fileContent}\n\`\`\`\n\n\n`;
+    copiedContent += `---\n${relativePath}:\n\`\`\`\n${fileContent}\n\`\`\`\n---\n`;
   });
   return copiedContent.trim();
 }

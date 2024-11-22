@@ -1,5 +1,5 @@
 {
-    "placeholder": "(Optional) Enter file extensions to copy (e.g: .js,.css,.ts).  (default: .vue, .js, .jsx, .ts)",
+    "placeholder": "(Optional) Enter the file extensions to copy (supports fuzzy matching, eg: .ts,*.json) [Default: .vue,.js,.jsx,.ts,.tsx]",
     "errorMessage": "Please select a folder to copy its contents.",
     "copiedMessage": "Folder contents copied to clipboard: ",
     "failedMessage": "Failed to copy folder contents: ",

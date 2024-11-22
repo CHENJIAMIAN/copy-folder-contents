@@ -9,7 +9,7 @@
     "url": "https://github.com/CHENJIAMIAN/copy-folder-contents"
   },
   "l10n": "./l10n",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.87.0"
   },
